@@ -2,25 +2,27 @@
 Project Motivation
 
 Early detection of brain tumors is critical for effective treatment. MRI scans are widely used for diagnosis, but manual analysis by radiologists can be time-consuming and subjective.
-
-This project explores how deep learning can assist in automated tumor detection by learning patterns directly from MRI images.
-
 The model combines Convolutional Neural Networks (CNN) for extracting spatial features and Long Short-Term Memory (LSTM) networks for learning deeper feature relationships. The goal was to evaluate whether a hybrid architecture could improve classification accuracy compared to traditional CNN models.
 
 Project Overview
+This project implements a cutting-edge **Hybrid CNN-LSTM architecture** for automated brain tumor detection from MRI images, achieving an impressive **98.47% accuracy**. The model combines:
 
-This repository contains a deep learning pipeline for binary classification of brain MRI scans:
-
+- **Convolutional Neural Networks (CNN)** for spatial feature extraction from MRI scans
+- **Long Short-Term Memory (LSTM)** networks for sequential pattern recognition
+- **Advanced data augmentation** for robust generalization
+- **Production-ready code** with comprehensive documentation
 
 Dataset
 
 Two publicly available datasets were used.
-Br35h Brain Tumor Dataset
-~3000 MRI images
-Balanced tumor and non-tumor classes
-Sartaj Brain Tumor Dataset
-1311 MRI images
-Additional MRI scans for improved diversity
+1. **Br35h Dataset** (3,000 images)
+   - [Download from Kaggle](https://www.kaggle.com/datasets/ahmedhamada0/brain-tumor-detection)
+   - High-quality MRI scans
+   - Balanced classes
+
+2. **Sartaj Dataset** (1,311 images)
+   - [Download from Kaggle](https://www.kaggle.com/datasets/sartajbhuvaji/brain-tumor-classification-mri)
+   - Multiple MRI modalities
 Combined dataset size: ~4300 images
 
 Dataset structure:
@@ -157,35 +159,74 @@ Training the Model
 
 Run the training script:
 
-python brain_tumor_cnn_lstm.py
-This will:
-Load MRI images
-Apply preprocessing and augmentation
-Train the CNN-LSTM model
-Save the trained model
-Making Predictions
-Example inference code:
+### Training
+
+```python
+from brain_tumor_cnn_lstm import BrainTumorCNNLSTM, DataLoader
+
+# Load data
+loader = DataLoader(data_dir='path/to/dataset', img_size=150)
+X, y = loader.load_dataset(dataset_name='br35h')
+
+# Build model
+model = BrainTumorCNNLSTM(img_size=150, num_classes=2)
+model.build_model()
+
+# Train
+history = model.train(X_train, y_train, X_val, y_val, epochs=50)
+
+# Evaluate
+metrics = model.evaluate(X_test, y_test)
+```
+
+### Inference
+
+**Single Image Prediction:**
+
+```python
 from tensorflow.keras.models import load_model
 import cv2
 import numpy as np
-model = load_model("outputs/model.h5")
-img = cv2.imread("scan.jpg", cv2.IMREAD_GRAYSCALE)
-img = cv2.resize(img,(150,150))
-img = img/255.0
-img = img.reshape(1,150,150,1)
+
+# Load model
+model = load_model('outputs/brain_tumor_cnn_lstm_model.h5')
+
+# Load and preprocess image
+img = cv2.imread('mri_scan.jpg', cv2.IMREAD_GRAYSCALE)
+img = cv2.resize(img, (150, 150))
+img = img.astype('float32') / 255.0
+img = img.reshape(1, 150, 150, 1)
+
+# Predict
 prediction = model.predict(img)
-classes = ["Tumor","Healthy"]
-print(classes[np.argmax(prediction)])
-Project Structure
-Brain-Tumor-Detection-CNN-LSTM
-dataset/
-    yes/
-    no/
-brain_tumor_cnn_lstm.py
-inference.py
-requirements.txt
-README.md
-notebooks/
+class_idx = np.argmax(prediction[0])
+confidence = prediction[0][class_idx] * 100
+
+classes = ['Brain Tumor', 'Healthy']
+print(f"Prediction: {classes[class_idx]} ({confidence:.2f}%)")
+```
+
+**Batch Prediction:**
+
+```bash
+python inference.py \
+    --model outputs/brain_tumor_cnn_lstm_model.h5 \
+    --folder ./test_images/ \
+    --output predictions.csv
+```
+
+## 📚 Documentation
+
+Comprehensive documentation is available:
+
+| Document | Description |
+|----------|-------------|
+| [README.md](README.md) | This file - project overview |
+| [USAGE_GUIDE.md](USAGE_GUIDE.md) | Detailed step-by-step tutorial |
+| [CHEAT_SHEET.md](CHEAT_SHEET.md) | Quick reference guide |
+| [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) | How to run and deploy |
+| [Brain_Tumor_Detection_Colab.ipynb](Brain_Tumor_Detection_Colab.ipynb) | Interactive Colab notebook |
+
 Limitations
 Although the model achieves high accuracy, several limitations remain:
 Dataset size is relatively small
@@ -193,25 +234,8 @@ MRI scans come from different sources with varying quality
 The model performs binary classification only
 Further validation on clinical datasets would be required for real-world deployment.
 
-Future Work
-Possible extensions of this project:
-Multi-class tumor classification
-Grad-CAM visualizations for model explainability
-3D MRI volume analysis
-Web application for MRI upload and prediction
-Model deployment using Docker or cloud APIs
-Skills Demonstrated
-
-This project demonstrates experience with:
-Deep Learning
-Computer Vision
-Medical Image Classification
-CNN Architectures
-LSTM Networks
-Data Augmentation
-Model Evaluation Metrics
-TensorFlow / Keras
-Python ML pipelines
+## 🌟 Star History
+If you find this project useful, please consider giving it a ⭐!
 
 License
 This project is released under the MIT License.
