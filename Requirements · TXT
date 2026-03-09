@@ -1,0 +1,41 @@
+# Brain Tumor Detection CNN-LSTM Requirements
+# Python 3.8+
+
+# Deep Learning Framework
+tensorflow>=2.10.0,<2.16.0
+keras>=2.10.0
+
+# Core Scientific Computing
+numpy>=1.21.0,<2.0.0
+pandas>=1.3.0,<3.0.0
+scipy>=1.7.0
+
+# Data Visualization
+matplotlib>=3.4.0,<4.0.0
+seaborn>=0.11.0,<1.0.0
+
+# Machine Learning & Metrics
+scikit-learn>=1.0.0,<2.0.0
+
+# Image Processing
+opencv-python>=4.5.0,<5.0.0
+Pillow>=8.0.0,<11.0.0
+
+# Progress Bars
+tqdm>=4.62.0,<5.0.0
+
+# Jupyter Support (Optional)
+jupyter>=1.0.0
+notebook>=6.4.0
+ipykernel>=6.0.0
+ipywidgets>=7.6.0
+
+# Utilities
+h5py>=3.1.0
+pyyaml>=5.4.0
+
+# Optional: GPU Acceleration
+# tensorflow-gpu>=2.10.0  # Use if you have CUDA-capable GPU
+
+# Optional: Model Interpretability
+# tf-keras-vis>=0.8.0     # For Grad-CAM visualizations
