@@ -215,7 +215,7 @@ python inference.py \
     --output predictions.csv
 ```
 
-## 📚 Documentation
+##  Documentation
 
 Comprehensive documentation is available:
 
@@ -224,7 +224,6 @@ Comprehensive documentation is available:
 | [README.md](README.md) | This file - project overview |
 | [USAGE_GUIDE.md](USAGE_GUIDE.md) | Detailed step-by-step tutorial |
 | [CHEAT_SHEET.md](CHEAT_SHEET.md) | Quick reference guide |
-| [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) | How to run and deploy |
 | [Brain_Tumor_Detection_Colab.ipynb](Brain_Tumor_Detection_Colab.ipynb) | Interactive Colab notebook |
 
 Limitations
@@ -234,7 +233,7 @@ MRI scans come from different sources with varying quality
 The model performs binary classification only
 Further validation on clinical datasets would be required for real-world deployment.
 
-## 🌟 Star History
+##  Star History
 If you find this project useful, please consider giving it a ⭐!
 
 License
